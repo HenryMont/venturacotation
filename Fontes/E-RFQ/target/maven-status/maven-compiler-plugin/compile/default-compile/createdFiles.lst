@@ -1,0 +1,14 @@
+br\net\enovasys\config\ConverteData.class
+br\net\enovasys\dao\RespostaCotacaoDAO.class
+br\net\enovasys\modelo\CotacaoID.class
+br\net\enovasys\modelo\RespostaCotacaoID.class
+br\net\enovasys\config\MainHibernate.class
+br\net\enovasys\modelo\RespostaCotacao.class
+br\net\enovasys\controle\ROT18.class
+br\net\enovasys\dao\SessionFactoryBuilder.class
+br\net\enovasys\modelo\CotacaoFornecedor.class
+br\net\enovasys\controle\CotacaoBean.class
+br\net\enovasys\modelo\CotacaoFornecedorID.class
+br\net\enovasys\config\MainROT18.class
+br\net\enovasys\modelo\Cotacao.class
+br\net\enovasys\modelo\Fornecedor.class

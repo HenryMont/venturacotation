@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:ez="http://java.sun.com/jsf/composite/demo">
+
+<h:head>
+	<f:metadata>
+		<f:viewParam name="l337cr1p7" value="#{cotacaoBean.l337cr1p7}" />
+	</f:metadata>
+</h:head>
+
+<h:body>
+	<!-- DEFINE O TEMPLATE A SER UTILIZADO -->
+	<ui:composition template="../templates/common.xhtml">
+
+		<!-- CONTEUDO -->
+		<ui:define name="pageBody">
+
+			<!-- TABELA DE CABECALHO -->
+			<h:form style="text-align: left; font-weight: bold;">
+				<h:panelGrid columns="2">
+					<h:outputLabel value="Fornecedor: " />
+					<h:outputLabel value="#{cotacaoBean.fornecedorNome}" />
+					<h:outputLabel value="Cotação ID: " />
+					<h:outputLabel value="#{cotacaoBean.cotacaoID}" />
+					
+					<br />
+				</h:panelGrid>
+			</h:form>
+
+			<!-- TABELA PRINCIPAL -->
+			<h:form id="formPrincipal" >
+				<p:ajaxStatus onstart="statusDialog.show();"
+					onsuccess="statusDialog.hide();" />
+
+				<p:dialog widgetVar="statusDialog" header="Carregando..." modal="true"
+					showEffect="fade" hideEffect="fade" draggable="false" closable="false" resizable="false" >
+					<p:graphicImage value="../resources/images/ajax_loading.gif" />
+				</p:dialog>
+
+				<p:confirmDialog message="Se houver linhas em edição, estes valores não serão atualizados. Deseja finalizar a resposta e enviar estes dados à Petroserv?"
+					header="Atenção!" severity="alert" modal="true" widgetVar="confirmation">
+					<p:commandButton value="Sim" update="messages" oncomplete="confirmation.hide()"
+						action="#{cotacaoBean.finalizar()}" ajax="false" />
+					<p:commandButton value="Não" onclick="confirmation.hide()" type="button" />
+				</p:confirmDialog>
+
+				<p:messages id="messages" globalOnly="false" />  
+				
+				<p:dataTable id="tablePrincipal" 
+					value="#{cotacaoBean.buscarRespostas()}" var="item" onRowEditUpdate="messages"
+					rowEditListener="#{cotacaoBean.onEditRow}" paginator="true"
+					paginatorPosition="bottom" rows="5"
+					emptyMessage="Itens não existentes."
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+					<f:facet name="header">
+						<h:outputLabel value="Itens" />
+					</f:facet>
+					<p:column headerText="Produto ID" sortBy="#{item.cotacaoFornecedor.cotacao.produtoCodigo}">
+						<h:outputText
+							value="#{item.cotacaoFornecedor.cotacao.produtoCodigo}" />
+					</p:column>
+					<p:column headerText="Descrição" sortBy="#{item.cotacaoFornecedor.cotacao.produtoDescricao1}">
+						<h:outputText
+							value="#{item.cotacaoFornecedor.cotacao.produtoDescricao1}" />
+					</p:column>
+					<p:column headerText="Quantidade" sortBy="#{item.respostaCotacaoID.cotacaoQtd}">
+						<h:outputText value="#{item.respostaCotacaoID.cotacaoQtd}">
+							<f:convertNumber minFractionDigits="4" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Valor Unitário" sortBy="#{item.respostaValorUnitario}">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{item.respostaValorUnitarioNormal}">
+									<f:convertNumber minFractionDigits="2" type="currency"
+										currencySymbol="R$" />
+								</h:outputText>
+							</f:facet>
+							<f:facet name="input">
+                    			<p:inputText id="inputValor" value="#{item.respostaValorUnitarioNormal}" size="10" maxlength="14" onfocus="this.value='';"
+                    				converterMessage="O valor digitado não está seguindo um padrão válido!" onkeyup="moeda(this);" >
+									<f:convertNumber minFractionDigits="2" pattern="#,###,##0.00" currencyCode="BRL"
+										type="currency" maxIntegerDigits="14" />
+										<p:ajax event="change" global="false" update="inputValor" />
+								</p:inputText>		
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					<p:column headerText="Data Entrega">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{item.respostaDataEntregaGregoriana}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</f:facet>
+							<f:facet name="input">
+								<p:calendar value="#{item.respostaDataEntregaGregoriana}" size="10" onfocus="this.value='';"
+								 	converterMessage="A data digitada não está seguindo um padrão válido!" pattern="dd/MM/yyyy"
+									 mindate="#{cotacaoBean.minDate}" maxdate="#{item.cotacaoFornecedor.respostaDataLimiteGregoriana}" readOnlyInputText="true" >
+								</p:calendar>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					<p:column style="text-align: center" headerText="Data Limite">
+						<h:outputText value="#{item.cotacaoFornecedor.respostaDataLimiteGregoriana}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Editar" >
+						<p:rowEditor />
+					</p:column>
+				</p:dataTable>
+				<br />
+				
+				<p:commandButton value="Enviar" onclick="confirmation.show()" type="button"/>  
+				
+				<tr />
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

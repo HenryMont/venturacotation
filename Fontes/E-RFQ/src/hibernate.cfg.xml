@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8'?> 
+<!DOCTYPE hibernate-configuration PUBLIC 
+"-//Hibernate/Hibernate Configuration DTD 3.0//EN" 
+"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+	
+	<session-factory>
+	
+		<!-- <property name="hibernate.dialect">org.hibernate.dialect.OracleDialect</property>
+	    <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+	    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/rfqweb</property>
+	    <property name="hibernate.connection.username">root</property>
+	    <property name="hibernate.connection.password">Password$1</property>  -->
+	    <property name="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</property>
+	    <property name="hibernate.connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
+	    <property name="hibernate.connection.url">jdbc:sqlserver://AZURE-DB01:1433;databaseName=rfqweb</property>
+	    <property name="hibernate.default_schema">dbo</property> 
+	    <property name="hibernate.connection.username">rfq</property>
+	    <property name="hibernate.connection.password">rfqweb</property>
+	    <!-- jdbc:sqlserver://localhost\ServerInstanceOrServerName:1433;databaseName=DATABASE_NAME-->
+    
+		<property name="hibernate.hbm2ddl.auto">update</property>
+		<property name="show_sql">true</property>
+		
+		<mapping class="br.net.enovasys.modelo.Fornecedor" />
+		<mapping class="br.net.enovasys.modelo.CotacaoID" />
+		<mapping class="br.net.enovasys.modelo.Cotacao" />
+		<mapping class="br.net.enovasys.modelo.CotacaoFornecedorID" />
+		<mapping class="br.net.enovasys.modelo.CotacaoFornecedor" />
+		<mapping class="br.net.enovasys.modelo.RespostaCotacaoID" />
+		<mapping class="br.net.enovasys.modelo.RespostaCotacao" />
+				
+	</session-factory>
+	
+</hibernate-configuration> 	

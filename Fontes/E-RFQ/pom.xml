@@ -1,0 +1,145 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>E-RFQ</groupId>
+  <artifactId>E-RFQ</artifactId>
+  <version>0.0.1</version>
+  <packaging>war</packaging>
+  <name>E-RFQ</name>
+  
+  <properties>
+	<java.version>1.8</java.version>
+	<mysql.version>5.1.24</mysql.version>
+	<sqlserver.version>4.0</sqlserver.version>
+	<primefaces.version>2.2.1</primefaces.version>
+	<jsfapi.version>2.2.10</jsfapi.version>
+	<servlet-api.version>3.0.1</servlet-api.version>
+	<beanutils.version>1.9.2</beanutils.version>
+	<log4j.version>1.2.17</log4j.version>
+	<hibernate.version>3.5.6-Final</hibernate.version>
+	<slf4j.version>1.6.1</slf4j.version>
+	<javassist.version>3.9.0.GA</javassist.version>
+	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  
+  <dependencies>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql.version}</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>com.microsoft.sqlserver</groupId>
+		    <artifactId>sqljdbc4</artifactId>
+		    <version>${sqlserver.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces</artifactId>
+			<version>${primefaces.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.sun.faces</groupId>
+			<artifactId>jsf-api</artifactId>
+			<version>${jsfapi.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.sun.faces</groupId>
+			<artifactId>jsf-impl</artifactId>
+			<version>${jsfapi.version}</version>
+		</dependency>
+		
+		<!-- ===== Log4J ===== -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+		<!-- ================= -->
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>${servlet-api.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils</artifactId>
+			<version>${beanutils.version}</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.hibernate</groupId>
+		    <artifactId>hibernate-core</artifactId>
+		    <version>${hibernate.version}</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.hibernate</groupId>
+		    <artifactId>hibernate-annotations</artifactId>
+		    <version>${hibernate.version}</version>
+		</dependency>
+				
+		<dependency>
+		    <groupId>org.slf4j</groupId>
+		    <artifactId>slf4j-api</artifactId>
+		    <version>${slf4j.version}</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>javassist</groupId>
+		    <artifactId>javassist</artifactId>
+		    <version>${javassist.version}</version>
+		</dependency>
+				
+						
+  </dependencies>	
+  
+  <repositories> 
+		<repository> 
+			<id>Primefaces repository</id> 
+			<url>https://repository.primefaces.org/</url> 
+		</repository>
+		<repository> 
+			<id>Maven repository</id> 
+			<url>https://repo1.maven.org/maven2/</url> 
+		</repository>
+		<repository> 
+			<id>Sql Server repository</id> 
+			<url>https://clojars.org/repo/</url> 
+		</repository> 
+  </repositories>
+	
+  <build>
+    <sourceDirectory>src</sourceDirectory>
+    <resources>
+      <resource>
+        <directory>src</directory>
+        <excludes>
+          <exclude>**/*.java</exclude>
+        </excludes>
+      </resource>
+    </resources>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.1</version>
+        <configuration>
+          <source>${java.version}</source>
+          <target>${java.version}</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>3.2.3</version>
+        <configuration>
+          <warSourceDirectory>WebContent</warSourceDirectory>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
